@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: patient-service-db
+    environment:
+      POSTGRES_USER: admin_user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: db
+    ports:
+      - "5000:5432"   # Host:Container port mapping
+    volumes:
+      - ./docker_postgresql:/var/lib/postgresql/data  # Bind mount
+    networks:
+      - internal_network  # Connecting this service to the custom network
+
+networks:
+  internal_network:
+    driver: bridge  # Use the bridge driver for internal communication
