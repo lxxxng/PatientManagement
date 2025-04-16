@@ -2,14 +2,21 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "BillingServiceApplication",
+            "request": "launch",
+            "mainClass": "com.example.billing_service.BillingServiceApplication",
+            "projectName": "billing-service"
+        },
+        {
             "type": "docker",
             "name": "Patient Service - Docker",
             "request": "launch",
-            "image": "patient-service:latest", // Specify the image tag
-            "containerName": "patient-service", // Set the custom container name
+            "image": "patient-service:latest",
+            "containerName": "patient-service",
             "dockerBuild": {
-                "dockerfile": "${workspaceFolder}/Dockerfile", // Path to your Dockerfile
-                "context": "${workspaceFolder}", // The root context for the Docker build
+                "dockerfile": "${workspaceFolder}/Dockerfile",
+                "context": "${workspaceFolder}",
                 "args": {
                     "buildArg1": "value1",
                     "buildArg2": "value2"
@@ -17,12 +24,12 @@
             },
             "ports": [
                 {
-                    "containerPort": 4000,  // Container Port for the application
-                    "hostPort": 4000        // Host Port to be mapped to container
+                    "containerPort": 4000,
+                    "hostPort": 4000
                 }
             ],
             "runOptions": {
-                "network": "internal_network" // Network option to use custom network
+                "network": "internal_network"
             }
         }
     ]
