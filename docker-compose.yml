@@ -26,12 +26,24 @@ services:
       SPRING_DATASOURCE_USERNAME: admin_user  
       SPRING_DATASOURCE_PASSWORD: password  
       SPRING_JPA_HIBERNATE_DDL_AUTO: update  # JPA setting for auto schema update
-      SPRING_SQL_INIT_MODE: always  # SQL mode
+      SPRING_SQL_INIT_MODE: always  
     ports:
       - "4000:4000"  # Host:Container port mapping
     networks:
       - internal_network  # Connects to the same network as postgres
 
+  billing-service:
+    build:
+      context: ./billing-service
+      dockerfile: Dockerfile  # Path to Dockerfile in patient-service
+    container_name: billing-service
+    image: billing-service:latest  
+    ports:
+      - "4001:4001"  # Host:Container port mapping
+      - "9001:9001"  # Host:Container port mapping for gRPC
+    networks:
+      - internal_network  
+      
 networks:
   internal_network:
     driver: bridge  # Use the bridge driver for internal communication
