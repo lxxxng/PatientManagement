@@ -9,6 +9,7 @@ import com.example.patient_service.model.Patient;
 
 @Repository
 public interface PatientRepository extends JpaRepository <Patient, UUID> {
-    // custom methods that jpa auto convert to database query 
+    // custom methods that jpa auto convert to database query (exist by (variablename) )
     boolean existsByEmail(String email);
+    boolean existsByEmailAndIdNot(String email, UUID id);
 }
