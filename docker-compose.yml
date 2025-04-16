@@ -26,7 +26,7 @@ services:
       SPRING_DATASOURCE_USERNAME: admin_user  
       SPRING_DATASOURCE_PASSWORD: password  
       SPRING_JPA_HIBERNATE_DDL_AUTO: update  # JPA setting for auto schema update
-      SPRING_SQL_INT_MODE: always  # SQL mode
+      SPRING_SQL_INIT_MODE: always  # SQL mode
     ports:
       - "4000:4000"  # Host:Container port mapping
     networks:
