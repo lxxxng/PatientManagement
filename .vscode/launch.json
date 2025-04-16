@@ -1,21 +1,29 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "java",
-            "name": "Current File",
+            "type": "docker",
+            "name": "Patient Service - Docker",
             "request": "launch",
-            "mainClass": "${file}"
-        },
-        {
-            "type": "java",
-            "name": "PatientServiceApplication",
-            "request": "launch",
-            "mainClass": "com.example.patient_service.PatientServiceApplication",
-            "projectName": "patient-service"
+            "image": "patient-service:latest", // Specify the image tag
+            "containerName": "patient-service", // Set the custom container name
+            "dockerBuild": {
+                "dockerfile": "${workspaceFolder}/Dockerfile", // Path to your Dockerfile
+                "context": "${workspaceFolder}", // The root context for the Docker build
+                "args": {
+                    "buildArg1": "value1",
+                    "buildArg2": "value2"
+                }
+            },
+            "ports": [
+                {
+                    "containerPort": 4000,  // Container Port for the application
+                    "hostPort": 4000        // Host Port to be mapped to container
+                }
+            ],
+            "runOptions": {
+                "network": "internal_network" // Network option to use custom network
+            }
         }
     ]
 }

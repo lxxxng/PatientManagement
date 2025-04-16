@@ -15,6 +15,23 @@ services:
     networks:
       - internal_network  # Connecting this service to the custom network
 
+  patient-service:
+    build:
+      context: ./patient-service
+      dockerfile: Dockerfile  # Path to Dockerfile in patient-service
+    container_name: patient-service
+    image: patient-service:latest  
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://patient-service-db:5432/db  # Connecting to PostgreSQL
+      SPRING_DATASOURCE_USERNAME: admin_user  
+      SPRING_DATASOURCE_PASSWORD: password  
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update  # JPA setting for auto schema update
+      SPRING_SQL_INT_MODE: always  # SQL mode
+    ports:
+      - "4000:4000"  # Host:Container port mapping
+    networks:
+      - internal_network  # Connects to the same network as postgres
+
 networks:
   internal_network:
     driver: bridge  # Use the bridge driver for internal communication
