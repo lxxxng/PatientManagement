@@ -10,6 +10,7 @@ import com.example.patient_service.dto.PatientRequestDTO;
 import com.example.patient_service.dto.PatientResponseDTO;
 import com.example.patient_service.exception.EmailAlreadyExistsException;
 import com.example.patient_service.exception.PatientNotFoundException;
+import com.example.patient_service.grpc.BillingServiceGrpcClient;
 import com.example.patient_service.mapper.PatientMapper;
 import com.example.patient_service.model.Patient;
 import com.example.patient_service.repository.PatientRepository;
@@ -17,9 +18,11 @@ import com.example.patient_service.repository.PatientRepository;
 @Service
 public class PatientService{
     private PatientRepository patientRepository;
+    private final BillingServiceGrpcClient billingServiceGrpcClient;
 
-    public PatientService(PatientRepository patientRepository) {
+    public PatientService(PatientRepository patientRepository, BillingServiceGrpcClient billingServiceGrpcClient) {
         this.patientRepository = patientRepository;
+        this.billingServiceGrpcClient = billingServiceGrpcClient;
     }
 
     public List <PatientResponseDTO> getPatients() {
@@ -31,6 +34,7 @@ public class PatientService{
         return patientResponseDTOs;
     }
 
+    // create a new patient
     public PatientResponseDTO createPatient(PatientRequestDTO patientRequestDTO) {
         if(patientRepository.existsByEmail(patientRequestDTO.getEmail())) {
             throw new EmailAlreadyExistsException("A patient with this email already exists " + 
@@ -40,10 +44,15 @@ public class PatientService{
         // create a new patient and save it to the database
         Patient newPatient = patientRepository.save(PatientMapper.toModel(patientRequestDTO));
 
+        billingServiceGrpcClient.createBillingAccount(newPatient.getId().toString(), 
+                                                    newPatient.getName(), 
+                                                    newPatient.getEmail());
+
         // then return the created patient as a DTO response 
         return PatientMapper.toDTO(newPatient);
     }
 
+    // update an existing patient
     public PatientResponseDTO updatePatient(UUID id, PatientRequestDTO patientRequestDTO) {
         
         Patient patient = patientRepository.findById(id).
@@ -63,6 +72,7 @@ public class PatientService{
         return PatientMapper.toDTO(updatedPatient);
     }
 
+    // delete a patient
     public void deletePatient(UUID id)
     {
         patientRepository.deleteById(id);
