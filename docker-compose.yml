@@ -27,8 +27,8 @@ services:
       - KAFKA_CFG_NODE_ID=0
       - KAFKA_CFG_PROCESS_ROLES=controller,broker
     ports:
-      - "9092:9092"   # other containers in docker network can connect to this port
-      - "9094:9094"   # access from outside docker network, not necessary but for development 
+      - "9092:9092"  
+      - "9094:9094"   
     networks:
       - internal_network
 
@@ -46,6 +46,7 @@ services:
       SPRING_SQL_INIT_MODE: always  
       BILLING_SERVICE_ADDRESS: billing-service # Address of the billing service auto map from below
       BILLING_SERVICE_GRPC_PORT: 9001  # gRPC port for billing service
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092  # Kafka bootstrap server address
     ports:
       - "4000:4000"  # Host:Container port mapping
     networks:
