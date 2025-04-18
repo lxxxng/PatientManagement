@@ -99,6 +99,23 @@ services:
       - "4004:4004" 
     networks:
       - internal_network  
+
+  auth-service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile  
+    container_name: auth-service
+    image: auth-service:latest  
+    environment:
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://auth-service-db:5432/db
+      - SPRING_DATASOURCE_USERNAME=admin_user
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_SQL_INIT_MODE=always
+    ports:
+      - "4005:4005" 
+    networks:
+      - internal_network  
       
 networks:
   internal_network:
