@@ -31,7 +31,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-docker_postgresql/
-docker_postgres_auth/
-

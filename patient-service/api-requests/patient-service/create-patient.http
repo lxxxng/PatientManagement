@@ -1,10 +1,10 @@
 ### create patient
-POST http://localhost:4000/patients
+POST http://localhost:4004/api/patients
 Content-Type: application/json
 
 {
-    "name": "lixing53",
-    "email" : "lixing53@example.com",
+    "name": "lixing64",
+    "email" : "lixing64@example.com",
     "address" : "123 Main St, Springfield, USA",
     "dateOfBirth" : "1990-01-01",
     "registeredDate" : "2023-10-01"
