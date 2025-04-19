@@ -95,6 +95,8 @@ services:
       dockerfile: Dockerfile  
     container_name: api-gateway
     image: api-gateway:latest 
+    environment:
+      - AUTH_SERVICE_URL=http://auth-service:4005   # for JWT gateway filter factory. 
     ports:
       - "4004:4004" 
     networks:
@@ -113,8 +115,6 @@ services:
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_SQL_INIT_MODE: always
       JWT_SECRET: yourSuperSecretKeyWhichIsLongEnoughToBe256BitsLong #must be 32 bytes long or will have error
-    ports:
-      - "4005:4005" 
     networks:
       - internal_network  
       
