@@ -1,0 +1,1073 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "localstack": {
+        "id": "localstack",
+        "path": "localstack",
+        "children": {
+          "patientManagementVpc": {
+            "id": "patientManagementVpc",
+            "path": "localstack/patientManagementVpc",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "localstack/patientManagementVpc/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::EC2::VPC",
+                  "aws:cdk:cloudformation:props": {
+                    "cidrBlock": "10.0.0.0/16",
+                    "enableDnsHostnames": true,
+                    "enableDnsSupport": true,
+                    "instanceTenancy": "default",
+                    "tags": [
+                      {
+                        "key": "Name",
+                        "value": "PatientManagementVpc"
+                      }
+                    ]
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ec2.CfnVPC",
+                  "version": "2.178.1"
+                }
+              },
+              "PublicSubnet1": {
+                "id": "PublicSubnet1",
+                "path": "localstack/patientManagementVpc/PublicSubnet1",
+                "children": {
+                  "Subnet": {
+                    "id": "Subnet",
+                    "path": "localstack/patientManagementVpc/PublicSubnet1/Subnet",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
+                      "aws:cdk:cloudformation:props": {
+                        "availabilityZone": {
+                          "Fn::Select": [
+                            0,
+                            {
+                              "Fn::GetAZs": ""
+                            }
+                          ]
+                        },
+                        "cidrBlock": "10.0.0.0/18",
+                        "mapPublicIpOnLaunch": true,
+                        "tags": [
+                          {
+                            "key": "aws-cdk:subnet-name",
+                            "value": "Public"
+                          },
+                          {
+                            "key": "aws-cdk:subnet-type",
+                            "value": "Public"
+                          },
+                          {
+                            "key": "Name",
+                            "value": "localstack/patientManagementVpc/PublicSubnet1"
+                          }
+                        ],
+                        "vpcId": {
+                          "Ref": "patientManagementVpcC0A518ED"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnSubnet",
+                      "version": "2.178.1"
+                    }
+                  },
+                  "Acl": {
+                    "id": "Acl",
+                    "path": "localstack/patientManagementVpc/PublicSubnet1/Acl",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.178.1",
+                      "metadata": []
+                    }
+                  },
+                  "RouteTable": {
+                    "id": "RouteTable",
+                    "path": "localstack/patientManagementVpc/PublicSubnet1/RouteTable",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::RouteTable",
+                      "aws:cdk:cloudformation:props": {
+                        "tags": [
+                          {
+                            "key": "Name",
+                            "value": "localstack/patientManagementVpc/PublicSubnet1"
+                          }
+                        ],
+                        "vpcId": {
+                          "Ref": "patientManagementVpcC0A518ED"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnRouteTable",
+                      "version": "2.178.1"
+                    }
+                  },
+                  "RouteTableAssociation": {
+                    "id": "RouteTableAssociation",
+                    "path": "localstack/patientManagementVpc/PublicSubnet1/RouteTableAssociation",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::SubnetRouteTableAssociation",
+                      "aws:cdk:cloudformation:props": {
+                        "routeTableId": {
+                          "Ref": "patientManagementVpcPublicSubnet1RouteTableBD4E5AE2"
+                        },
+                        "subnetId": {
+                          "Ref": "patientManagementVpcPublicSubnet1SubnetBCF64FBF"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnSubnetRouteTableAssociation",
+                      "version": "2.178.1"
+                    }
+                  },
+                  "DefaultRoute": {
+                    "id": "DefaultRoute",
+                    "path": "localstack/patientManagementVpc/PublicSubnet1/DefaultRoute",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::Route",
+                      "aws:cdk:cloudformation:props": {
+                        "destinationCidrBlock": "0.0.0.0/0",
+                        "gatewayId": {
+                          "Ref": "patientManagementVpcIGW6E04685F"
+                        },
+                        "routeTableId": {
+                          "Ref": "patientManagementVpcPublicSubnet1RouteTableBD4E5AE2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnRoute",
+                      "version": "2.178.1"
+                    }
+                  },
+                  "EIP": {
+                    "id": "EIP",
+                    "path": "localstack/patientManagementVpc/PublicSubnet1/EIP",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::EIP",
+                      "aws:cdk:cloudformation:props": {
+                        "domain": "vpc",
+                        "tags": [
+                          {
+                            "key": "Name",
+                            "value": "localstack/patientManagementVpc/PublicSubnet1"
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnEIP",
+                      "version": "2.178.1"
+                    }
+                  },
+                  "NATGateway": {
+                    "id": "NATGateway",
+                    "path": "localstack/patientManagementVpc/PublicSubnet1/NATGateway",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::NatGateway",
+                      "aws:cdk:cloudformation:props": {
+                        "allocationId": {
+                          "Fn::GetAtt": [
+                            "patientManagementVpcPublicSubnet1EIP7193671C",
+                            "AllocationId"
+                          ]
+                        },
+                        "subnetId": {
+                          "Ref": "patientManagementVpcPublicSubnet1SubnetBCF64FBF"
+                        },
+                        "tags": [
+                          {
+                            "key": "Name",
+                            "value": "localstack/patientManagementVpc/PublicSubnet1"
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnNatGateway",
+                      "version": "2.178.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ec2.PublicSubnet",
+                  "version": "2.178.1",
+                  "metadata": []
+                }
+              },
+              "PublicSubnet2": {
+                "id": "PublicSubnet2",
+                "path": "localstack/patientManagementVpc/PublicSubnet2",
+                "children": {
+                  "Subnet": {
+                    "id": "Subnet",
+                    "path": "localstack/patientManagementVpc/PublicSubnet2/Subnet",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
+                      "aws:cdk:cloudformation:props": {
+                        "availabilityZone": {
+                          "Fn::Select": [
+                            1,
+                            {
+                              "Fn::GetAZs": ""
+                            }
+                          ]
+                        },
+                        "cidrBlock": "10.0.64.0/18",
+                        "mapPublicIpOnLaunch": true,
+                        "tags": [
+                          {
+                            "key": "aws-cdk:subnet-name",
+                            "value": "Public"
+                          },
+                          {
+                            "key": "aws-cdk:subnet-type",
+                            "value": "Public"
+                          },
+                          {
+                            "key": "Name",
+                            "value": "localstack/patientManagementVpc/PublicSubnet2"
+                          }
+                        ],
+                        "vpcId": {
+                          "Ref": "patientManagementVpcC0A518ED"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnSubnet",
+                      "version": "2.178.1"
+                    }
+                  },
+                  "Acl": {
+                    "id": "Acl",
+                    "path": "localstack/patientManagementVpc/PublicSubnet2/Acl",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.178.1",
+                      "metadata": []
+                    }
+                  },
+                  "RouteTable": {
+                    "id": "RouteTable",
+                    "path": "localstack/patientManagementVpc/PublicSubnet2/RouteTable",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::RouteTable",
+                      "aws:cdk:cloudformation:props": {
+                        "tags": [
+                          {
+                            "key": "Name",
+                            "value": "localstack/patientManagementVpc/PublicSubnet2"
+                          }
+                        ],
+                        "vpcId": {
+                          "Ref": "patientManagementVpcC0A518ED"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnRouteTable",
+                      "version": "2.178.1"
+                    }
+                  },
+                  "RouteTableAssociation": {
+                    "id": "RouteTableAssociation",
+                    "path": "localstack/patientManagementVpc/PublicSubnet2/RouteTableAssociation",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::SubnetRouteTableAssociation",
+                      "aws:cdk:cloudformation:props": {
+                        "routeTableId": {
+                          "Ref": "patientManagementVpcPublicSubnet2RouteTableC26E30C6"
+                        },
+                        "subnetId": {
+                          "Ref": "patientManagementVpcPublicSubnet2Subnet1F68DA9F"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnSubnetRouteTableAssociation",
+                      "version": "2.178.1"
+                    }
+                  },
+                  "DefaultRoute": {
+                    "id": "DefaultRoute",
+                    "path": "localstack/patientManagementVpc/PublicSubnet2/DefaultRoute",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::Route",
+                      "aws:cdk:cloudformation:props": {
+                        "destinationCidrBlock": "0.0.0.0/0",
+                        "gatewayId": {
+                          "Ref": "patientManagementVpcIGW6E04685F"
+                        },
+                        "routeTableId": {
+                          "Ref": "patientManagementVpcPublicSubnet2RouteTableC26E30C6"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnRoute",
+                      "version": "2.178.1"
+                    }
+                  },
+                  "EIP": {
+                    "id": "EIP",
+                    "path": "localstack/patientManagementVpc/PublicSubnet2/EIP",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::EIP",
+                      "aws:cdk:cloudformation:props": {
+                        "domain": "vpc",
+                        "tags": [
+                          {
+                            "key": "Name",
+                            "value": "localstack/patientManagementVpc/PublicSubnet2"
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnEIP",
+                      "version": "2.178.1"
+                    }
+                  },
+                  "NATGateway": {
+                    "id": "NATGateway",
+                    "path": "localstack/patientManagementVpc/PublicSubnet2/NATGateway",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::NatGateway",
+                      "aws:cdk:cloudformation:props": {
+                        "allocationId": {
+                          "Fn::GetAtt": [
+                            "patientManagementVpcPublicSubnet2EIP5BC5A6C3",
+                            "AllocationId"
+                          ]
+                        },
+                        "subnetId": {
+                          "Ref": "patientManagementVpcPublicSubnet2Subnet1F68DA9F"
+                        },
+                        "tags": [
+                          {
+                            "key": "Name",
+                            "value": "localstack/patientManagementVpc/PublicSubnet2"
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnNatGateway",
+                      "version": "2.178.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ec2.PublicSubnet",
+                  "version": "2.178.1",
+                  "metadata": []
+                }
+              },
+              "PrivateSubnet1": {
+                "id": "PrivateSubnet1",
+                "path": "localstack/patientManagementVpc/PrivateSubnet1",
+                "children": {
+                  "Subnet": {
+                    "id": "Subnet",
+                    "path": "localstack/patientManagementVpc/PrivateSubnet1/Subnet",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
+                      "aws:cdk:cloudformation:props": {
+                        "availabilityZone": {
+                          "Fn::Select": [
+                            0,
+                            {
+                              "Fn::GetAZs": ""
+                            }
+                          ]
+                        },
+                        "cidrBlock": "10.0.128.0/18",
+                        "mapPublicIpOnLaunch": false,
+                        "tags": [
+                          {
+                            "key": "aws-cdk:subnet-name",
+                            "value": "Private"
+                          },
+                          {
+                            "key": "aws-cdk:subnet-type",
+                            "value": "Private"
+                          },
+                          {
+                            "key": "Name",
+                            "value": "localstack/patientManagementVpc/PrivateSubnet1"
+                          }
+                        ],
+                        "vpcId": {
+                          "Ref": "patientManagementVpcC0A518ED"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnSubnet",
+                      "version": "2.178.1"
+                    }
+                  },
+                  "Acl": {
+                    "id": "Acl",
+                    "path": "localstack/patientManagementVpc/PrivateSubnet1/Acl",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.178.1",
+                      "metadata": []
+                    }
+                  },
+                  "RouteTable": {
+                    "id": "RouteTable",
+                    "path": "localstack/patientManagementVpc/PrivateSubnet1/RouteTable",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::RouteTable",
+                      "aws:cdk:cloudformation:props": {
+                        "tags": [
+                          {
+                            "key": "Name",
+                            "value": "localstack/patientManagementVpc/PrivateSubnet1"
+                          }
+                        ],
+                        "vpcId": {
+                          "Ref": "patientManagementVpcC0A518ED"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnRouteTable",
+                      "version": "2.178.1"
+                    }
+                  },
+                  "RouteTableAssociation": {
+                    "id": "RouteTableAssociation",
+                    "path": "localstack/patientManagementVpc/PrivateSubnet1/RouteTableAssociation",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::SubnetRouteTableAssociation",
+                      "aws:cdk:cloudformation:props": {
+                        "routeTableId": {
+                          "Ref": "patientManagementVpcPrivateSubnet1RouteTable57483321"
+                        },
+                        "subnetId": {
+                          "Ref": "patientManagementVpcPrivateSubnet1SubnetC5282CC7"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnSubnetRouteTableAssociation",
+                      "version": "2.178.1"
+                    }
+                  },
+                  "DefaultRoute": {
+                    "id": "DefaultRoute",
+                    "path": "localstack/patientManagementVpc/PrivateSubnet1/DefaultRoute",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::Route",
+                      "aws:cdk:cloudformation:props": {
+                        "destinationCidrBlock": "0.0.0.0/0",
+                        "natGatewayId": {
+                          "Ref": "patientManagementVpcPublicSubnet1NATGateway49C8F635"
+                        },
+                        "routeTableId": {
+                          "Ref": "patientManagementVpcPrivateSubnet1RouteTable57483321"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnRoute",
+                      "version": "2.178.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ec2.PrivateSubnet",
+                  "version": "2.178.1",
+                  "metadata": []
+                }
+              },
+              "PrivateSubnet2": {
+                "id": "PrivateSubnet2",
+                "path": "localstack/patientManagementVpc/PrivateSubnet2",
+                "children": {
+                  "Subnet": {
+                    "id": "Subnet",
+                    "path": "localstack/patientManagementVpc/PrivateSubnet2/Subnet",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
+                      "aws:cdk:cloudformation:props": {
+                        "availabilityZone": {
+                          "Fn::Select": [
+                            1,
+                            {
+                              "Fn::GetAZs": ""
+                            }
+                          ]
+                        },
+                        "cidrBlock": "10.0.192.0/18",
+                        "mapPublicIpOnLaunch": false,
+                        "tags": [
+                          {
+                            "key": "aws-cdk:subnet-name",
+                            "value": "Private"
+                          },
+                          {
+                            "key": "aws-cdk:subnet-type",
+                            "value": "Private"
+                          },
+                          {
+                            "key": "Name",
+                            "value": "localstack/patientManagementVpc/PrivateSubnet2"
+                          }
+                        ],
+                        "vpcId": {
+                          "Ref": "patientManagementVpcC0A518ED"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnSubnet",
+                      "version": "2.178.1"
+                    }
+                  },
+                  "Acl": {
+                    "id": "Acl",
+                    "path": "localstack/patientManagementVpc/PrivateSubnet2/Acl",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.178.1",
+                      "metadata": []
+                    }
+                  },
+                  "RouteTable": {
+                    "id": "RouteTable",
+                    "path": "localstack/patientManagementVpc/PrivateSubnet2/RouteTable",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::RouteTable",
+                      "aws:cdk:cloudformation:props": {
+                        "tags": [
+                          {
+                            "key": "Name",
+                            "value": "localstack/patientManagementVpc/PrivateSubnet2"
+                          }
+                        ],
+                        "vpcId": {
+                          "Ref": "patientManagementVpcC0A518ED"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnRouteTable",
+                      "version": "2.178.1"
+                    }
+                  },
+                  "RouteTableAssociation": {
+                    "id": "RouteTableAssociation",
+                    "path": "localstack/patientManagementVpc/PrivateSubnet2/RouteTableAssociation",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::SubnetRouteTableAssociation",
+                      "aws:cdk:cloudformation:props": {
+                        "routeTableId": {
+                          "Ref": "patientManagementVpcPrivateSubnet2RouteTableAB16BCF2"
+                        },
+                        "subnetId": {
+                          "Ref": "patientManagementVpcPrivateSubnet2Subnet1B6FC5FB"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnSubnetRouteTableAssociation",
+                      "version": "2.178.1"
+                    }
+                  },
+                  "DefaultRoute": {
+                    "id": "DefaultRoute",
+                    "path": "localstack/patientManagementVpc/PrivateSubnet2/DefaultRoute",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::Route",
+                      "aws:cdk:cloudformation:props": {
+                        "destinationCidrBlock": "0.0.0.0/0",
+                        "natGatewayId": {
+                          "Ref": "patientManagementVpcPublicSubnet2NATGateway01C8B65B"
+                        },
+                        "routeTableId": {
+                          "Ref": "patientManagementVpcPrivateSubnet2RouteTableAB16BCF2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnRoute",
+                      "version": "2.178.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ec2.PrivateSubnet",
+                  "version": "2.178.1",
+                  "metadata": []
+                }
+              },
+              "IGW": {
+                "id": "IGW",
+                "path": "localstack/patientManagementVpc/IGW",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::EC2::InternetGateway",
+                  "aws:cdk:cloudformation:props": {
+                    "tags": [
+                      {
+                        "key": "Name",
+                        "value": "PatientManagementVpc"
+                      }
+                    ]
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ec2.CfnInternetGateway",
+                  "version": "2.178.1"
+                }
+              },
+              "VPCGW": {
+                "id": "VPCGW",
+                "path": "localstack/patientManagementVpc/VPCGW",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::EC2::VPCGatewayAttachment",
+                  "aws:cdk:cloudformation:props": {
+                    "internetGatewayId": {
+                      "Ref": "patientManagementVpcIGW6E04685F"
+                    },
+                    "vpcId": {
+                      "Ref": "patientManagementVpcC0A518ED"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ec2.CfnVPCGatewayAttachment",
+                  "version": "2.178.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_ec2.Vpc",
+              "version": "2.178.1",
+              "metadata": []
+            }
+          },
+          "AuthServiceDb": {
+            "id": "AuthServiceDb",
+            "path": "localstack/AuthServiceDb",
+            "children": {
+              "SubnetGroup": {
+                "id": "SubnetGroup",
+                "path": "localstack/AuthServiceDb/SubnetGroup",
+                "children": {
+                  "Default": {
+                    "id": "Default",
+                    "path": "localstack/AuthServiceDb/SubnetGroup/Default",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::RDS::DBSubnetGroup",
+                      "aws:cdk:cloudformation:props": {
+                        "dbSubnetGroupDescription": "Subnet group for AuthServiceDb database",
+                        "subnetIds": [
+                          {
+                            "Ref": "patientManagementVpcPrivateSubnet1SubnetC5282CC7"
+                          },
+                          {
+                            "Ref": "patientManagementVpcPrivateSubnet2Subnet1B6FC5FB"
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_rds.CfnDBSubnetGroup",
+                      "version": "2.178.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_rds.SubnetGroup",
+                  "version": "2.178.1",
+                  "metadata": []
+                }
+              },
+              "SecurityGroup": {
+                "id": "SecurityGroup",
+                "path": "localstack/AuthServiceDb/SecurityGroup",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "localstack/AuthServiceDb/SecurityGroup/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroup",
+                      "aws:cdk:cloudformation:props": {
+                        "groupDescription": "Security group for AuthServiceDb database",
+                        "securityGroupEgress": [
+                          {
+                            "cidrIp": "0.0.0.0/0",
+                            "description": "Allow all outbound traffic by default",
+                            "ipProtocol": "-1"
+                          }
+                        ],
+                        "vpcId": {
+                          "Ref": "patientManagementVpcC0A518ED"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnSecurityGroup",
+                      "version": "2.178.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ec2.SecurityGroup",
+                  "version": "2.178.1",
+                  "metadata": []
+                }
+              },
+              "Secret": {
+                "id": "Secret",
+                "path": "localstack/AuthServiceDb/Secret",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "localstack/AuthServiceDb/Secret/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::SecretsManager::Secret",
+                      "aws:cdk:cloudformation:props": {
+                        "description": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "Generated by the CDK for stack: ",
+                              {
+                                "Ref": "AWS::StackName"
+                              }
+                            ]
+                          ]
+                        },
+                        "generateSecretString": {
+                          "passwordLength": 30,
+                          "secretStringTemplate": "{\"username\":\"admin_user\"}",
+                          "generateStringKey": "password",
+                          "excludeCharacters": " %+~`#$&*()|[]{}:;<>?!'/@\"\\"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_secretsmanager.CfnSecret",
+                      "version": "2.178.1"
+                    }
+                  },
+                  "Attachment": {
+                    "id": "Attachment",
+                    "path": "localstack/AuthServiceDb/Secret/Attachment",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "localstack/AuthServiceDb/Secret/Attachment/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::SecretsManager::SecretTargetAttachment",
+                          "aws:cdk:cloudformation:props": {
+                            "secretId": {
+                              "Ref": "localstackAuthServiceDbSecretBE08D4303fdaad7efa858a3daf9490cf0a702aeb"
+                            },
+                            "targetId": {
+                              "Ref": "AuthServiceDb4EA10E77"
+                            },
+                            "targetType": "AWS::RDS::DBInstance"
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_secretsmanager.CfnSecretTargetAttachment",
+                          "version": "2.178.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_secretsmanager.SecretTargetAttachment",
+                      "version": "2.178.1",
+                      "metadata": []
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_rds.DatabaseSecret",
+                  "version": "2.178.1",
+                  "metadata": []
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "localstack/AuthServiceDb/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::RDS::DBInstance",
+                  "aws:cdk:cloudformation:props": {
+                    "allocatedStorage": "20",
+                    "copyTagsToSnapshot": true,
+                    "dbInstanceClass": "db.t2.micro",
+                    "dbName": "auth-service-db",
+                    "dbSubnetGroupName": {
+                      "Ref": "AuthServiceDbSubnetGroup12237DD0"
+                    },
+                    "engine": "postgres",
+                    "engineVersion": "17.2",
+                    "masterUsername": "admin_user",
+                    "masterUserPassword": {
+                      "Fn::Join": [
+                        "",
+                        [
+                          "{{resolve:secretsmanager:",
+                          {
+                            "Ref": "localstackAuthServiceDbSecretBE08D4303fdaad7efa858a3daf9490cf0a702aeb"
+                          },
+                          ":SecretString:password::}}"
+                        ]
+                      ]
+                    },
+                    "storageType": "gp2",
+                    "vpcSecurityGroups": [
+                      {
+                        "Fn::GetAtt": [
+                          "AuthServiceDbSecurityGroup4A0F0427",
+                          "GroupId"
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_rds.CfnDBInstance",
+                  "version": "2.178.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_rds.DatabaseInstance",
+              "version": "2.178.1",
+              "metadata": []
+            }
+          },
+          "PatientServiceDb": {
+            "id": "PatientServiceDb",
+            "path": "localstack/PatientServiceDb",
+            "children": {
+              "SubnetGroup": {
+                "id": "SubnetGroup",
+                "path": "localstack/PatientServiceDb/SubnetGroup",
+                "children": {
+                  "Default": {
+                    "id": "Default",
+                    "path": "localstack/PatientServiceDb/SubnetGroup/Default",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::RDS::DBSubnetGroup",
+                      "aws:cdk:cloudformation:props": {
+                        "dbSubnetGroupDescription": "Subnet group for PatientServiceDb database",
+                        "subnetIds": [
+                          {
+                            "Ref": "patientManagementVpcPrivateSubnet1SubnetC5282CC7"
+                          },
+                          {
+                            "Ref": "patientManagementVpcPrivateSubnet2Subnet1B6FC5FB"
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_rds.CfnDBSubnetGroup",
+                      "version": "2.178.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_rds.SubnetGroup",
+                  "version": "2.178.1",
+                  "metadata": []
+                }
+              },
+              "SecurityGroup": {
+                "id": "SecurityGroup",
+                "path": "localstack/PatientServiceDb/SecurityGroup",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "localstack/PatientServiceDb/SecurityGroup/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroup",
+                      "aws:cdk:cloudformation:props": {
+                        "groupDescription": "Security group for PatientServiceDb database",
+                        "securityGroupEgress": [
+                          {
+                            "cidrIp": "0.0.0.0/0",
+                            "description": "Allow all outbound traffic by default",
+                            "ipProtocol": "-1"
+                          }
+                        ],
+                        "vpcId": {
+                          "Ref": "patientManagementVpcC0A518ED"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ec2.CfnSecurityGroup",
+                      "version": "2.178.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ec2.SecurityGroup",
+                  "version": "2.178.1",
+                  "metadata": []
+                }
+              },
+              "Secret": {
+                "id": "Secret",
+                "path": "localstack/PatientServiceDb/Secret",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "localstack/PatientServiceDb/Secret/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::SecretsManager::Secret",
+                      "aws:cdk:cloudformation:props": {
+                        "description": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "Generated by the CDK for stack: ",
+                              {
+                                "Ref": "AWS::StackName"
+                              }
+                            ]
+                          ]
+                        },
+                        "generateSecretString": {
+                          "passwordLength": 30,
+                          "secretStringTemplate": "{\"username\":\"admin_user\"}",
+                          "generateStringKey": "password",
+                          "excludeCharacters": " %+~`#$&*()|[]{}:;<>?!'/@\"\\"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_secretsmanager.CfnSecret",
+                      "version": "2.178.1"
+                    }
+                  },
+                  "Attachment": {
+                    "id": "Attachment",
+                    "path": "localstack/PatientServiceDb/Secret/Attachment",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "localstack/PatientServiceDb/Secret/Attachment/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::SecretsManager::SecretTargetAttachment",
+                          "aws:cdk:cloudformation:props": {
+                            "secretId": {
+                              "Ref": "localstackPatientServiceDbSecretE29F42EC3fdaad7efa858a3daf9490cf0a702aeb"
+                            },
+                            "targetId": {
+                              "Ref": "PatientServiceDb4C436D31"
+                            },
+                            "targetType": "AWS::RDS::DBInstance"
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_secretsmanager.CfnSecretTargetAttachment",
+                          "version": "2.178.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_secretsmanager.SecretTargetAttachment",
+                      "version": "2.178.1",
+                      "metadata": []
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_rds.DatabaseSecret",
+                  "version": "2.178.1",
+                  "metadata": []
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "localstack/PatientServiceDb/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::RDS::DBInstance",
+                  "aws:cdk:cloudformation:props": {
+                    "allocatedStorage": "20",
+                    "copyTagsToSnapshot": true,
+                    "dbInstanceClass": "db.t2.micro",
+                    "dbName": "patient-service-db",
+                    "dbSubnetGroupName": {
+                      "Ref": "PatientServiceDbSubnetGroup1312FFB6"
+                    },
+                    "engine": "postgres",
+                    "engineVersion": "17.2",
+                    "masterUsername": "admin_user",
+                    "masterUserPassword": {
+                      "Fn::Join": [
+                        "",
+                        [
+                          "{{resolve:secretsmanager:",
+                          {
+                            "Ref": "localstackPatientServiceDbSecretE29F42EC3fdaad7efa858a3daf9490cf0a702aeb"
+                          },
+                          ":SecretString:password::}}"
+                        ]
+                      ]
+                    },
+                    "storageType": "gp2",
+                    "vpcSecurityGroups": [
+                      {
+                        "Fn::GetAtt": [
+                          "PatientServiceDbSecurityGroupCEB42CD9",
+                          "GroupId"
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_rds.CfnDBInstance",
+                  "version": "2.178.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_rds.DatabaseInstance",
+              "version": "2.178.1",
+              "metadata": []
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.178.1"
+        }
+      },
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "constructs.Construct",
+          "version": "10.4.2"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "aws-cdk-lib.App",
+      "version": "2.178.1"
+    }
+  }
+}

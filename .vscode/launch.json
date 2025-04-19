@@ -1,36 +1,22 @@
 {
     "version": "0.2.0",
     "configurations": [
-        {
-            "type": "java",
-            "name": "BillingServiceApplication",
-            "request": "launch",
-            "mainClass": "com.example.billing_service.BillingServiceApplication",
-            "projectName": "billing-service"
-        },
-        {
-            "type": "docker",
-            "name": "Patient Service - Docker",
-            "request": "launch",
-            "image": "patient-service:latest",
-            "containerName": "patient-service",
-            "dockerBuild": {
-                "dockerfile": "${workspaceFolder}/Dockerfile",
-                "context": "${workspaceFolder}",
-                "args": {
-                    "buildArg1": "value1",
-                    "buildArg2": "value2"
-                }
-            },
-            "ports": [
-                {
-                    "containerPort": 4000,
-                    "hostPort": 4000
-                }
-            ],
-            "runOptions": {
-                "network": "internal_network"
-            }
-        }
+      {
+        "type": "java",
+        "name": "BillingServiceApplication",
+        "request": "launch",
+        "mainClass": "com.example.billing_service.BillingServiceApplication",
+        "projectName": "billing-service"
+      },
+      {
+        "type": "java",
+        "name": "Run LocalStack",
+        "request": "launch",
+        "mainClass": "com.example.stack.LocalStack",
+        "projectName": "infrastructure",
+        "cwd": "${workspaceFolder}/infrastructure",
+        "shortenCommandLine": "argfile"
+      }
     ]
-}
+  }
+  
