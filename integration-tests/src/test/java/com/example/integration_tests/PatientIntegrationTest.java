@@ -5,20 +5,19 @@ import org.junit.jupiter.api.Test;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.response.Response;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class AuthIntegrationTest {
-    
+
+public class PatientIntegrationTest {
+
     @BeforeAll
     static void setup(){
         RestAssured.baseURI = "http://localhost:4004";
     }
 
-    // True positive test 
     @Test
-    public void shouldReturnOKWithValidToken(){
+    public void shouldReturnPatientsWithValidToken(){
         // 1. Arrange
         String loginPayload = 
         """
@@ -28,40 +27,23 @@ public class AuthIntegrationTest {
             }
         """;
 
-        Response response = given()
+        String token = given()
             .contentType(ContentType.JSON)
             .body(loginPayload)
             .when()                 // 2. Act
             .post("/auth/login")
             .then()                 // 3. Assert
             .statusCode(200)                    // asserts that response has status code 200
-            .body("token", notNullValue())      // asserts that response.body.token != null
             .extract()
-            .response();
-
-        System.out.println("Generated token haha: " + response.jsonPath().getString("token"));
-    }
-
-    // True negative test 
-    @Test
-    public void shouldReturnUnauthorizedOnInvalidLogin(){
-        // 1. Arrange
-        String loginPayload = 
-        """
-            {                   
-                "email": "invalid_user@test.com",
-                "password": "wrong_password123"
-            }
-        """;
+            .jsonPath()
+            .get("token");
 
         given()
-            .contentType(ContentType.JSON)
-            .body(loginPayload)
+            .header("Authorization", "Bearer " + token) // add the token to the header
             .when()                 // 2. Act
-            .post("/auth/login")
+            .get("/api/patients")
             .then()                 // 3. Assert
-            .statusCode(401);                
+            .statusCode(200)                    
+            .body("patients", notNullValue());
     }
-
-
 }
